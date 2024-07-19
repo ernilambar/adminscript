@@ -20,7 +20,22 @@ class Admin {
 	 * @since 1.0.0
 	 */
 	public function register() {
+		add_action( 'admin_menu', [ $this, 'options_page' ] );
 		add_filter( 'plugin_action_links_' . ADMINSCRIPT_BASE_FILENAME, [ $this, 'plugin_links' ] );
+	}
+
+	public function options_page() {
+		add_options_page(
+			'Adminscript',
+			'Adminscript',
+			'manage_options',
+			'adminscript',
+			[ $this, 'render_page' ]
+		);
+	}
+
+	public function render_page() {
+		echo 'hello';
 	}
 
 	/**
