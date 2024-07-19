@@ -21,6 +21,7 @@ class Admin {
 	 */
 	public function register() {
 		add_action( 'admin_menu', [ $this, 'options_page' ] );
+		add_action( 'admin_init', [ $this, 'register_options' ] );
 		add_filter( 'plugin_action_links_' . ADMINSCRIPT_BASE_FILENAME, [ $this, 'plugin_links' ] );
 	}
 
@@ -34,8 +35,65 @@ class Admin {
 		);
 	}
 
+	public function register_options() {
+		register_setting( 'adminscript', 'adminscript_options' );
+
+		add_settings_section(
+			'adminscript_section_general',
+			'',
+			function () {},
+			'adminscript'
+		);
+
+		add_settings_field(
+			'code',
+			__( 'Code', 'adminscript' ),
+			[ $this, 'cb_field_code' ],
+			'adminscript',
+			'adminscript_section_general',
+			[
+				'label_for'               => 'code',
+				'class'                   => 'adminscript_row',
+				'adminscript_custom_data' => 'custom',
+			]
+		);
+	}
+
+	public function cb_field_code( $args ) {
+		$options = get_option( 'adminscript_options' );
+
+		$code = '';
+
+		if ( is_array( $options ) && array_key_exists( 'code', $options ) ) {
+			$code = $options['code'];
+		}
+		?>
+		<textarea name="adminscript_options[<?php echo esc_attr( $args['label_for'] ); ?>]" id="<?php echo esc_attr( $args['label_for'] ); ?>"><?php echo esc_textarea( $code ); ?></textarea>
+		<?php
+	}
+
 	public function render_page() {
-		echo 'hello';
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		if ( isset( $_GET['settings-updated'] ) ) {
+			add_settings_error( 'adminscript_messages', 'adminscript_message', __( 'Settings Saved', 'wporg' ), 'updated' );
+		}
+
+		settings_errors( 'adminscript_messages' );
+		?>
+	<div class="wrap">
+		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+		<form action="options.php" method="post">
+			<?php
+			settings_fields( 'adminscript' );
+			do_settings_sections( 'adminscript' );
+			submit_button( 'Save Settings' );
+			?>
+		</form>
+	</div>
+		<?php
 	}
 
 	/**
