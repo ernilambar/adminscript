@@ -39,7 +39,7 @@
 		"format": "prettier \"**/*.{cjs,css,js,json}\" --write",
 		"version": "easy-replace-in-files",
 		"pot": "composer run-script pot",
-		"clean": "rimraf build deploy vendor",
+		"clean": "rimraf deploy vendor",
 		"vendor": "composer install --no-dev --no-scripts -o",
 		"predeploy": "pnpm run clean && pnpm run vendor",
 		"deploy": "packtor"
