@@ -29,11 +29,14 @@
 		]
 	},
 	"devDependencies": {
+		"@wordpress/prettier-config": "^4.3.0",
 		"easy-replace-in-files": "^1.0.3",
 		"packtor": "^1.0.2",
+		"prettier": "npm:wp-prettier@^3.0.3",
 		"rimraf": "^6.0.0"
 	},
 	"scripts": {
+		"format": "prettier \"**/*.{cjs,css,js,json}\" --write",
 		"version": "easy-replace-in-files",
 		"pot": "composer run-script pot",
 		"clean": "rimraf build deploy vendor",

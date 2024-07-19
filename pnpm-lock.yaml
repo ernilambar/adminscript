@@ -8,12 +8,18 @@ importers:
 
   .:
     devDependencies:
+      '@wordpress/prettier-config':
+        specifier: ^4.3.0
+        version: 4.3.0(wp-prettier@3.0.3)
       easy-replace-in-files:
         specifier: ^1.0.3
         version: 1.0.3
       packtor:
         specifier: ^1.0.2
         version: 1.0.2
+      prettier:
+        specifier: npm:wp-prettier@^3.0.3
+        version: wp-prettier@3.0.3
       rimraf:
         specifier: ^6.0.0
         version: 6.0.1
@@ -139,6 +145,12 @@ packages:
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
+
+  '@wordpress/prettier-config@4.3.0':
+    resolution: {integrity: sha512-2OWp2g/e0y2iKh1LZvc+f0pxesI5NYBQSgnJkaXHt6ktc7QaBX3nwYcZQ030TBMxl2hnNclLAPUR85UMSRx0dw==}
+    engines: {node: '>=18.12.0', npm: '>=8.19.2'}
+    peerDependencies:
+      prettier: '>=3'
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -712,6 +724,11 @@ packages:
     engines: {node: '>= 8'}
     hasBin: true
 
+  wp-prettier@3.0.3:
+    resolution: {integrity: sha512-X4UlrxDTH8oom9qXlcjnydsjAOD2BmB6yFmvS4Z2zdTzqqpRWb+fbqrH412+l+OUXmbzJlSXjlMFYPgYG12IAA==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
     engines: {node: '>=10'}
@@ -931,6 +948,10 @@ snapshots:
     optional: true
 
   '@types/normalize-package-data@2.4.4': {}
+
+  '@wordpress/prettier-config@4.3.0(wp-prettier@3.0.3)':
+    dependencies:
+      prettier: wp-prettier@3.0.3
 
   ansi-regex@5.0.1: {}
 
@@ -1528,6 +1549,8 @@ snapshots:
   which@2.0.2:
     dependencies:
       isexe: 2.0.0
+
+  wp-prettier@3.0.3: {}
 
   wrap-ansi@7.0.0:
     dependencies:

@@ -51,7 +51,6 @@ local-xdebuginfo.php
 .sass-cache/
 
 # Project folders
-/build/
 /deploy/
 /docs/
 /languages/

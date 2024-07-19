@@ -22,8 +22,10 @@ class Admin {
 	public function register() {
 		add_action( 'admin_menu', [ $this, 'options_page' ] );
 		add_action( 'admin_init', [ $this, 'register_options' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'load_assets' ] );
 		add_filter( 'plugin_action_links_' . ADMINSCRIPT_BASE_FILENAME, [ $this, 'plugin_links' ] );
 	}
+
 
 	public function options_page() {
 		add_options_page(
@@ -78,12 +80,12 @@ class Admin {
 		}
 
 		if ( isset( $_GET['settings-updated'] ) ) {
-			add_settings_error( 'adminscript_messages', 'adminscript_message', __( 'Settings Saved', 'wporg' ), 'updated' );
+			add_settings_error( 'adminscript_messages', 'adminscript_message', __( 'Settings Saved', 'adminscript' ), 'updated' );
 		}
 
 		settings_errors( 'adminscript_messages' );
 		?>
-	<div class="wrap">
+	<div class="wrap adminscript-wrap" id="adminscript-wrap">
 		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 		<form action="options.php" method="post">
 			<?php
@@ -94,6 +96,27 @@ class Admin {
 		</form>
 	</div>
 		<?php
+	}
+
+	/**
+	 * Load assets.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $hook Hook name.
+	 */
+	public function load_assets( $hook ) {
+		if ( 'settings_page_adminscript' !== $hook ) {
+			return;
+		}
+
+		$ce_settings['javascript'] = wp_enqueue_code_editor( [ 'type' => 'javascript' ] );
+
+		wp_localize_script( 'jquery', 'codeEditorSettings', $ce_settings );
+
+		wp_enqueue_style( 'wp-codemirror' );
+
+		wp_enqueue_script( 'adminscript-code', ADMINSCRIPT_URL . '/build/admin.js', [ 'jquery', 'code-editor' ], ADMINSCRIPT_VERSION, true );
 	}
 
 	/**
