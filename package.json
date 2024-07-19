@@ -1,0 +1,44 @@
+{
+	"name": "adminscript",
+	"version": "1.0.0",
+	"description": "Adminscript",
+	"author": "Nilambar Sharma",
+	"license": "GPL-2.0-or-later",
+	"main_file": "adminscript.php",
+	"keywords": [
+		"wordpress",
+		"wordpress-plugin"
+	],
+	"homepage": "https://github.com/ernilambar/adminscript",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ernilambar/adminscript.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ernilambar/adminscript/issues"
+	},
+	"packtor": {
+		"files": [
+			"**/*",
+			"!*.js",
+			"!*.json",
+			"!*.lock",
+			"!*.md",
+			"!*.yaml",
+			"!src/**/*"
+		]
+	},
+	"devDependencies": {
+		"easy-replace-in-files": "^1.0.3",
+		"packtor": "^1.0.2",
+		"rimraf": "^6.0.0"
+	},
+	"scripts": {
+		"version": "easy-replace-in-files",
+		"pot": "composer run-script pot",
+		"clean": "rimraf build deploy vendor",
+		"vendor": "composer install --no-dev --no-scripts -o",
+		"predeploy": "pnpm run clean && pnpm run vendor && pnpm run build",
+		"deploy": "packtor"
+	}
+}
