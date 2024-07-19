@@ -64,9 +64,8 @@ class Admin {
 			'adminscript',
 			'adminscript_section_general',
 			[
-				'label_for'               => 'js_code',
-				'class'                   => 'adminscript_row',
-				'adminscript_custom_data' => 'custom',
+				'label_for' => 'js_code',
+				'class'     => 'adminscript_js_code_row',
 			]
 		);
 	}
@@ -132,7 +131,8 @@ class Admin {
 
 		wp_enqueue_style( 'wp-codemirror' );
 
-		wp_enqueue_script( 'adminscript-code', ADMINSCRIPT_URL . '/build/admin.js', [ 'jquery', 'code-editor' ], ADMINSCRIPT_VERSION, true );
+		wp_enqueue_style( 'adminscript-code', ADMINSCRIPT_URL . '/build/adminscript.css', [], ADMINSCRIPT_VERSION );
+		wp_enqueue_script( 'adminscript-code', ADMINSCRIPT_URL . '/build/adminscript.js', [ 'jquery', 'code-editor' ], ADMINSCRIPT_VERSION, true );
 	}
 
 	/**
