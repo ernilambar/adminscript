@@ -13,6 +13,7 @@ namespace Nilambar\Adminscript\Core;
  * @since 1.0.0
  */
 class Core {
+
 	/**
 	 * Register.
 	 *

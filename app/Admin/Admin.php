@@ -23,10 +23,15 @@ class Admin {
 		add_action( 'admin_menu', [ $this, 'options_page' ] );
 		add_action( 'admin_init', [ $this, 'register_options' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'load_assets' ] );
+		add_action( 'admin_footer', [ $this, 'add_footer' ] );
 		add_filter( 'plugin_action_links_' . ADMINSCRIPT_BASE_FILENAME, [ $this, 'plugin_links' ] );
 	}
 
-
+	/**
+	 * Register options page.
+	 *
+	 * @since 1.0.0
+	 */
 	public function options_page() {
 		add_options_page(
 			'Adminscript',
@@ -37,6 +42,11 @@ class Admin {
 		);
 	}
 
+	/**
+	 * Register plugin options.
+	 *
+	 * @since 1.0.0
+	 */
 	public function register_options() {
 		register_setting( 'adminscript', 'adminscript_options' );
 
@@ -48,53 +58,59 @@ class Admin {
 		);
 
 		add_settings_field(
-			'code',
-			__( 'Code', 'adminscript' ),
+			'js_code',
+			esc_html__( 'Code', 'adminscript' ),
 			[ $this, 'cb_field_code' ],
 			'adminscript',
 			'adminscript_section_general',
 			[
-				'label_for'               => 'code',
+				'label_for'               => 'js_code',
 				'class'                   => 'adminscript_row',
 				'adminscript_custom_data' => 'custom',
 			]
 		);
 	}
 
+	/**
+	 * Code field callback.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Field arguments.
+	 */
 	public function cb_field_code( $args ) {
 		$options = get_option( 'adminscript_options' );
 
 		$code = '';
 
-		if ( is_array( $options ) && array_key_exists( 'code', $options ) ) {
-			$code = $options['code'];
+		if ( is_array( $options ) && array_key_exists( 'js_code', $options ) ) {
+			$code = $options['js_code'];
 		}
 		?>
 		<textarea name="adminscript_options[<?php echo esc_attr( $args['label_for'] ); ?>]" id="<?php echo esc_attr( $args['label_for'] ); ?>"><?php echo esc_textarea( $code ); ?></textarea>
 		<?php
 	}
 
+	/**
+	 * Render page.
+	 *
+	 * @since 1.0.0
+	 */
 	public function render_page() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-
-		if ( isset( $_GET['settings-updated'] ) ) {
-			add_settings_error( 'adminscript_messages', 'adminscript_message', __( 'Settings Saved', 'adminscript' ), 'updated' );
-		}
-
-		settings_errors( 'adminscript_messages' );
 		?>
-	<div class="wrap adminscript-wrap" id="adminscript-wrap">
-		<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-		<form action="options.php" method="post">
-			<?php
-			settings_fields( 'adminscript' );
-			do_settings_sections( 'adminscript' );
-			submit_button( 'Save Settings' );
-			?>
-		</form>
-	</div>
+		<div class="wrap adminscript-wrap" id="adminscript-wrap">
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			<form action="options.php" method="post">
+				<?php
+				settings_fields( 'adminscript' );
+				do_settings_sections( 'adminscript' );
+				submit_button( 'Save Settings' );
+				?>
+			</form>
+		</div>
 		<?php
 	}
 
@@ -117,6 +133,34 @@ class Admin {
 		wp_enqueue_style( 'wp-codemirror' );
 
 		wp_enqueue_script( 'adminscript-code', ADMINSCRIPT_URL . '/build/admin.js', [ 'jquery', 'code-editor' ], ADMINSCRIPT_VERSION, true );
+	}
+
+	/**
+	 * Add JS to footer.
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_footer() {
+		$options = get_option( 'adminscript_options' );
+
+		$code = '';
+
+		if ( is_array( $options ) && array_key_exists( 'js_code', $options ) ) {
+			$code = $options['js_code'];
+		}
+
+		if ( empty( $code ) ) {
+			return;
+		}
+		?>
+		<script type="text/javascript">
+			( function ( $ ) {
+
+				<?php echo $code; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+
+			} )( jQuery );
+		</script>
+		<?php
 	}
 
 	/**
