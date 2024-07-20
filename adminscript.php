@@ -5,7 +5,7 @@
  * Description: WordPress plugin to add Javascript in the admin panel.
  * Version: 1.0.1
  * Requires at least: 6.6
- * Requires PHP: 8.0
+ * Requires PHP: 7.2
  * Author: Nilambar Sharma
  * Author URI: https://www.nilambar.net/
  * License: GPLv2 or later
@@ -18,12 +18,15 @@
 
 namespace Nilambar\Adminscript;
 
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 define( 'ADMINSCRIPT_VERSION', '1.0.1' );
+define( 'ADMINSCRIPT_SLUG', 'adminscript' );
 define( 'ADMINSCRIPT_BASE_NAME', basename( __DIR__ ) );
 define( 'ADMINSCRIPT_BASE_FILEPATH', __FILE__ );
 define( 'ADMINSCRIPT_BASE_FILENAME', plugin_basename( __FILE__ ) );
@@ -38,3 +41,6 @@ if ( file_exists( ADMINSCRIPT_DIR . '/vendor/autoload.php' ) ) {
 if ( class_exists( 'Nilambar\Adminscript\Init' ) ) {
 	Init::register_services();
 }
+
+$adminscript_update_checker = PucFactory::buildUpdateChecker( 'https://github.com/ernilambar/adminscript', __FILE__, ADMINSCRIPT_SLUG );
+$adminscript_update_checker->getVcsApi()->enableReleaseAssets();
