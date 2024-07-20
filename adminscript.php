@@ -3,7 +3,7 @@
  * Plugin Name: Adminscript
  * Plugin URI: https://www.nilambar.net/adminscript.
  * Description: WordPress plugin to add Javascript in the admin panel.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Requires at least: 6.6
  * Requires PHP: 7.2
  * Author: Nilambar Sharma
@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ADMINSCRIPT_VERSION', '1.0.1' );
+define( 'ADMINSCRIPT_VERSION', '1.0.2' );
 define( 'ADMINSCRIPT_SLUG', 'adminscript' );
 define( 'ADMINSCRIPT_BASE_NAME', basename( __DIR__ ) );
 define( 'ADMINSCRIPT_BASE_FILEPATH', __FILE__ );

@@ -3,7 +3,7 @@
 Contributors: rabmalin
 Tags: admin, javascript, backend
 Tested up to: 6.6
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,7 +35,10 @@ Nice, create an issue on the [Plugin Repo](https://github.com/ernilambar/adminsc
 
 == Changelog ==
 
-= 1.0.1 - 20 Jul 2024 =
+= 1.0.2 - 20 Jul 2024 =
+* Minor bug fixes
+
+= 1.0.1 - 19 Jul 2024 =
 * Make editer full width
 
 = 1.0.0 - 18 Jul 2024 =
