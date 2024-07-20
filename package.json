@@ -27,7 +27,8 @@
 			"!*.md",
 			"!*.yaml",
 			"!languages/**/*",
-			"!src/**/*"
+			"!src/**/*",
+			"!vendor/yahnis-elsts/plugin-update-checker/languages/*"
 		]
 	},
 	"devDependencies": {
